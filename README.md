@@ -1,8 +1,10 @@
 <font color="dodgerblue">SA-MP Isup Plugin</font>
+
 <font color="red">By Abagail</font>
 
 Natives:
 native IsServerOnline(ip[], port=7777);
+
 native set_ping_timeout(timeout);
 
 <font size="5">IsServerOnline</font>
