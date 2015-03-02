@@ -10,6 +10,15 @@ typedef void(*logprintf_t)(char* format, ...);
 logprintf_t logprintf;
 extern void *pAMXFunctions;
 
+int PING_TIMEOUT = 6000;
+cell AMX_NATIVE_CALL Server_SetPingTimeout(AMX *amx, cell* params)
+{
+	if (PING_TIMEOUT != params[1])
+	{
+		PING_TIMEOUT = params[1];
+	}
+	return 0;
+}
 cell AMX_NATIVE_CALL Server_IsOnline(AMX* amx, cell* params)
 {
 	int
@@ -30,17 +39,26 @@ cell AMX_NATIVE_CALL Server_IsOnline(AMX* amx, cell* params)
 		amx_GetString(text, addr, 0, len);
 
 		Query query(text, port);
-		std::string recvval = query.Ping("5256");
+		if (PING_TIMEOUT == 0)
+		{
+			PING_TIMEOUT = 6000;
+		}
+		std::string ping_timeout_string = std::to_string(PING_TIMEOUT);
+		std::string recvval = query.Ping(ping_timeout_string);
 		if (recvval.empty())
 		{
 			delete[] text;
-			return 0;
+			return -1;
 		}
 		const char* val = new char[5];
 		val = recvval.c_str();
 		int PingVar;
 		PingVar = strtol(val, 0, 10);
 
+		if (PingVar == 0)
+		{
+			PingVar = 1;
+		}
 		delete[] text;
 		return PingVar;
 	}
@@ -69,7 +87,7 @@ PLUGIN_EXPORT void PLUGIN_CALL Unload()
 AMX_NATIVE_INFO PluginNatives[] =
 {
 	{ "IsServerOnline", Server_IsOnline },
-	{ 0, 0 }
+	{ "set_ping_timeout", Server_SetPingTimeout },
 };
 
 PLUGIN_EXPORT int PLUGIN_CALL AmxLoad(AMX *amx)
