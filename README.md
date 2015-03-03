@@ -14,3 +14,6 @@ This checks if the server is online by pinging the server mechanism.
 <font size="5">set_ping_timeout</font>
 
 This sets the amount of time in which the script will timeout / stop running if no ping is recieved.
+
+A more intense documentary can be found at the link below:
+https://evanabagail.net/doc/isup/
