@@ -10,7 +10,7 @@ typedef void(*logprintf_t)(char* format, ...);
 logprintf_t logprintf;
 extern void *pAMXFunctions;
 
-int PING_TIMEOUT = 6000;
+int PING_TIMEOUT = 100;
 cell AMX_NATIVE_CALL Server_SetPingTimeout(AMX *amx, cell* params)
 {
 	if (PING_TIMEOUT != params[1])
@@ -39,12 +39,7 @@ cell AMX_NATIVE_CALL Server_IsOnline(AMX* amx, cell* params)
 		amx_GetString(text, addr, 0, len);
 
 		Query query(text, port);
-		if (PING_TIMEOUT == 0)
-		{
-			PING_TIMEOUT = 6000;
-		}
-		std::string ping_timeout_string = std::to_string(PING_TIMEOUT);
-		std::string recvval = query.Ping(ping_timeout_string);
+		std::string recvval = query.Ping("1000", PING_TIMEOUT);
 		if (recvval.empty())
 		{
 			delete[] text;
@@ -55,10 +50,6 @@ cell AMX_NATIVE_CALL Server_IsOnline(AMX* amx, cell* params)
 		int PingVar;
 		PingVar = strtol(val, 0, 10);
 
-		if (PingVar == 0)
-		{
-			PingVar = 1;
-		}
 		delete[] text;
 		return PingVar;
 	}
