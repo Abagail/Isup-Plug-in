@@ -43,7 +43,7 @@ cell AMX_NATIVE_CALL Server_IsOnline(AMX* amx, cell* params)
 		if (recvval.empty())
 		{
 			delete[] text;
-			return -1;
+			return 0;
 		}
 		const char* val = new char[5];
 		val = recvval.c_str();
