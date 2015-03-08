@@ -24,6 +24,7 @@
 #ifdef WIN32
 #include <windows.h>
 #include <winsock.h>
+
 #pragma comment(lib, "Ws2_32.lib")
 
 typedef int socklen_t;
@@ -35,6 +36,8 @@ typedef int socklen_t;
 
 #include <stdlib.h>
 #include <fcntl.h>
+#include <netdb.h>
+#include <unistd.h>
 
 typedef unsigned char BYTE;
 #define closesocket close
