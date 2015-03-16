@@ -11,6 +11,11 @@ logprintf_t logprintf;
 extern void *pAMXFunctions;
 
 int PING_TIMEOUT = 100;
+cell AMX_NATIVE_CALL Server_GetPingTimeout(AMX* amx, cell* params)
+{
+	return PING_TIMEOUT;
+}
+
 cell AMX_NATIVE_CALL Server_SetPingTimeout(AMX *amx, cell* params)
 {
 	if (PING_TIMEOUT != params[1])
@@ -79,6 +84,7 @@ AMX_NATIVE_INFO PluginNatives[] =
 {
 	{ "IsServerOnline", Server_IsOnline },
 	{ "set_ping_timeout", Server_SetPingTimeout },
+	{ "get_ping_timeout", Server_GetPingTimeout },
 };
 
 PLUGIN_EXPORT int PLUGIN_CALL AmxLoad(AMX *amx)

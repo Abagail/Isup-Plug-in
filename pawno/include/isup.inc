@@ -5,4 +5,5 @@
 #endif
 
 native IsServerOnline(IP[], port=7777);
+native get_ping_timeout();
 native set_ping_timeout(timeout);
